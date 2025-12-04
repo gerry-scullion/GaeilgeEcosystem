@@ -612,7 +612,7 @@
             <!-- Entities Tab -->
             <div class="tab-content active" id="tab-entities">
                 <div class="form-section">
-                    <h3>➕ Add Entity</h3>
+                    <h3 id="form-header">➕ Add Entity</h3>
                     <div class="form-group">
                         <label>Name</label>
                         <input type="text" id="entity-name" placeholder="Entity name...">
@@ -651,7 +651,9 @@
                             <label class="service-checkbox"><input type="checkbox" value="employment"> 💼 Employment</label>
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="addEntity()">Add Entity</button>
+                    <button class="btn btn-primary" onclick="addEntity()" id="add-entity-btn">Add Entity</button>
+                    <button class="btn btn-primary" onclick="updateEntity()" id="update-entity-btn" style="display:none;background:#FF9800;">Update Entity</button>
+                    <button class="btn" onclick="cancelEdit()" id="cancel-edit-btn" style="display:none;background:#6c757d;color:white;margin-top:4px;">Cancel</button>
                 </div>
 
                 <div class="entity-list">
@@ -1279,6 +1281,8 @@
             return null;
         }
 
+        let editingEntity = null;
+
         function addEntity() {
             const name = document.getElementById('entity-name').value.trim();
             const parentName = document.getElementById('parent-select').value;
@@ -1313,6 +1317,105 @@
             document.querySelectorAll('#services-checkboxes input').forEach(cb => cb.checked = false);
 
             initVisualization();
+        }
+
+        function editEntity(name) {
+            const entities = getAllEntities(ecosystemData);
+            const entity = entities.find(e => e.name === name);
+            if (!entity) return;
+
+            editingEntity = name;
+
+            // Fill form with entity data
+            document.getElementById('entity-name').value = entity.name;
+            document.getElementById('entity-desc').value = findNode(ecosystemData, name)?.description || '';
+            document.getElementById('category-select').value = entity.category;
+            
+            // Set parent select
+            const parentSelect = document.getElementById('parent-select');
+            parentSelect.value = entity.parent || '';
+
+            // Set services checkboxes
+            document.querySelectorAll('#services-checkboxes input').forEach(cb => {
+                cb.checked = entity.services.includes(cb.value);
+                cb.parentElement.classList.toggle('checked', cb.checked);
+            });
+
+            // Show update/cancel buttons, hide add button
+            document.getElementById('add-entity-btn').style.display = 'none';
+            document.getElementById('update-entity-btn').style.display = 'block';
+            document.getElementById('cancel-edit-btn').style.display = 'block';
+            document.getElementById('form-header').textContent = '✏️ Edit Entity';
+
+            // Scroll to form
+            document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateEntity() {
+            if (!editingEntity) return;
+
+            const newName = document.getElementById('entity-name').value.trim();
+            const newParent = document.getElementById('parent-select').value;
+            const newCategory = document.getElementById('category-select').value;
+            const newDescription = document.getElementById('entity-desc').value.trim();
+            
+            const newServices = [];
+            document.querySelectorAll('#services-checkboxes input:checked').forEach(cb => {
+                newServices.push(cb.value);
+            });
+
+            if (!newName) {
+                alert('Please enter a name');
+                return;
+            }
+
+            // Find and update the entity in the tree
+            function updateInTree(tree) {
+                if (tree.name.replace(/\n/g, ' ') === editingEntity) {
+                    tree.name = newName;
+                    tree.category = newCategory;
+                    tree.description = newDescription;
+                    tree.services = newServices;
+                    return true;
+                }
+                if (tree.children) {
+                    for (let child of tree.children) {
+                        if (updateInTree(child)) return true;
+                    }
+                }
+                return false;
+            }
+
+            updateInTree(ecosystemData);
+
+            // Update connections that reference this entity
+            connections = connections.map(c => ({
+                ...c,
+                from: c.from === editingEntity ? newName : c.from,
+                to: c.to === editingEntity ? newName : c.to
+            }));
+
+            cancelEdit();
+            initVisualization();
+        }
+
+        function cancelEdit() {
+            editingEntity = null;
+            
+            // Clear form
+            document.getElementById('entity-name').value = '';
+            document.getElementById('entity-desc').value = '';
+            document.getElementById('parent-select').value = '';
+            document.querySelectorAll('#services-checkboxes input').forEach(cb => {
+                cb.checked = false;
+                cb.parentElement.classList.remove('checked');
+            });
+
+            // Show add button, hide update/cancel
+            document.getElementById('add-entity-btn').style.display = 'block';
+            document.getElementById('update-entity-btn').style.display = 'none';
+            document.getElementById('cancel-edit-btn').style.display = 'none';
+            document.getElementById('form-header').textContent = '➕ Add Entity';
         }
 
         function removeEntity(name) {
@@ -1400,6 +1503,7 @@
                         <div class="entity-parent">${entity.parent ? `↳ ${entity.parent}` : 'Root'}</div>
                         ${entity.services.length > 0 ? `<div class="entity-services">${entity.services.map(s => `<span class="service-tag">${serviceIcons[s] || ''}</span>`).join('')}</div>` : ''}
                     </div>
+                    <button class="btn btn-small" style="background:#2196F3;color:white;margin-right:3px;" onclick="editEntity('${entity.name.replace(/'/g, "\\'")}')">✎</button>
                     <button class="btn btn-danger btn-small" onclick="removeEntity('${entity.name.replace(/'/g, "\\'")}')">×</button>
                 </div>
             `).join('');
