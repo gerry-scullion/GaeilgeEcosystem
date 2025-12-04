@@ -1155,7 +1155,8 @@
                 .scaleExtent([0.2, 4])
                 .on('zoom', (event) => g.attr('transform', event.transform));
 
-            svg.call(zoom);
+            svg.call(zoom)
+               .on('dblclick.zoom', null); // Disable double-click zoom
             g = svg.append('g');
 
             processData();
@@ -1285,7 +1286,12 @@
                 .call(d3.drag()
                     .on('start', dragStarted)
                     .on('drag', dragged)
-                    .on('end', dragEnded));
+                    .on('end', dragEnded))
+                .on('dblclick', (event, d) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    openModal(d);
+                });
 
             nodeGroups.append('circle')
                 .attr('class', 'node-circle')
@@ -1294,11 +1300,7 @@
                 .attr('stroke', d => d3.color(getNodeColor(d)).darker(0.3))
                 .attr('stroke-width', d => d.depth === 0 ? 4 : 2)
                 .on('mouseover', showTooltip)
-                .on('mouseout', hideTooltip)
-                .on('dblclick', (event, d) => {
-                    event.stopPropagation();
-                    openModal(d);
-                });
+                .on('mouseout', hideTooltip);
 
             nodeGroups.each(function(d) {
                 const group = d3.select(this);
