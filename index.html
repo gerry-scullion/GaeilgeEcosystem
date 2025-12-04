@@ -499,6 +499,90 @@
             color: white;
         }
 
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.visible {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: #1a5f3c;
+            color: white;
+        }
+
+        .modal-header h2 {
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            opacity: 0.8;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-body .form-group {
+            margin-bottom: 14px;
+        }
+
+        .modal-body .form-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .modal-body .form-group input,
+        .modal-body .form-group select {
+            padding: 10px 12px;
+            font-size: 0.9rem;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 16px 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+
         /* Legend */
         .legend {
             position: absolute;
@@ -714,6 +798,54 @@
                 <div class="tooltip-title"></div>
                 <div class="tooltip-desc"></div>
                 <div class="tooltip-services"></div>
+            </div>
+
+            <!-- Edit Modal -->
+            <div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
+                <div class="modal" onclick="event.stopPropagation()">
+                    <div class="modal-header">
+                        <h2>✏️ Edit Entity</h2>
+                        <button class="modal-close" onclick="closeModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" id="modal-name">
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select id="modal-category">
+                                <option value="government">Government</option>
+                                <option value="education">Education</option>
+                                <option value="community">Community</option>
+                                <option value="media">Media</option>
+                                <option value="courses">Courses</option>
+                                <option value="resources">Resources</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" id="modal-desc">
+                        </div>
+                        <div class="form-group">
+                            <label>Services Offered</label>
+                            <div class="services-grid" id="modal-services">
+                                <label class="service-checkbox"><input type="checkbox" value="grants"> 💰 Grants</label>
+                                <label class="service-checkbox"><input type="checkbox" value="community"> 👥 Community</label>
+                                <label class="service-checkbox"><input type="checkbox" value="events"> 🎉 Events</label>
+                                <label class="service-checkbox"><input type="checkbox" value="resources"> 📚 Resources</label>
+                                <label class="service-checkbox"><input type="checkbox" value="training"> 🎓 Training</label>
+                                <label class="service-checkbox"><input type="checkbox" value="advocacy"> 📢 Advocacy</label>
+                                <label class="service-checkbox"><input type="checkbox" value="research"> 🔬 Research</label>
+                                <label class="service-checkbox"><input type="checkbox" value="employment"> 💼 Employment</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" style="background:#6c757d;color:white;" onclick="closeModal()">Cancel</button>
+                        <button class="btn btn-primary" style="width:auto;" onclick="saveModal()">Save Changes</button>
+                    </div>
+                </div>
             </div>
 
             <div class="legend">
@@ -999,7 +1131,7 @@
                 g.selectAll('.connection-link').classed('dimmed', false);
             } else {
                 g.selectAll('.node').each(function(d) {
-                    const hasService = d.services && d.services.includes(currentFilter);
+                    const hasService = d.allServices && d.allServices.includes(currentFilter);
                     d3.select(this).select('.node-circle').classed('dimmed', !hasService);
                 });
                 g.selectAll('.link').classed('dimmed', true);
@@ -1050,14 +1182,30 @@
             links = [];
             let id = 0;
 
+            // First pass: collect all services including children's services
+            function collectAllServices(node) {
+                let allServices = new Set(node.services || []);
+                if (node.children) {
+                    node.children.forEach(child => {
+                        const childServices = collectAllServices(child);
+                        childServices.forEach(s => allServices.add(s));
+                    });
+                }
+                return allServices;
+            }
+
             function traverse(node, parent = null, depth = 0) {
                 const nodeId = id++;
+                const ownServices = node.services || [];
+                const allServices = Array.from(collectAllServices(node));
+                
                 nodes.push({
                     id: nodeId,
                     name: node.name,
                     category: node.category,
                     description: node.description,
-                    services: node.services || [],
+                    services: ownServices,
+                    allServices: allServices,
                     depth: depth,
                     children: node.children ? node.children.length : 0
                 });
@@ -1146,7 +1294,11 @@
                 .attr('stroke', d => d3.color(getNodeColor(d)).darker(0.3))
                 .attr('stroke-width', d => d.depth === 0 ? 4 : 2)
                 .on('mouseover', showTooltip)
-                .on('mouseout', hideTooltip);
+                .on('mouseout', hideTooltip)
+                .on('dblclick', (event, d) => {
+                    event.stopPropagation();
+                    openModal(d);
+                });
 
             nodeGroups.each(function(d) {
                 const group = d3.select(this);
@@ -1166,9 +1318,9 @@
                         .text(line);
                 });
 
-                // Add service icons below node
-                if (d.services && d.services.length > 0 && d.depth > 0) {
-                    const serviceStr = d.services.slice(0, 4).map(s => serviceIcons[s] || '').join('');
+                // Add service icons below node (showing all services including children's)
+                if (d.allServices && d.allServices.length > 0 && d.depth > 0) {
+                    const serviceStr = d.allServices.slice(0, 6).map(s => serviceIcons[s] || '').join('');
                     group.append('text')
                         .attr('class', 'node-services')
                         .attr('text-anchor', 'middle')
@@ -1228,11 +1380,25 @@
             tooltip.querySelector('.tooltip-desc').textContent = d.description || '';
             
             const servicesDiv = tooltip.querySelector('.tooltip-services');
-            if (d.services && d.services.length > 0) {
-                servicesDiv.innerHTML = d.services.map(s => 
-                    `<span class="tooltip-service">${serviceIcons[s] || ''} ${s}</span>`
-                ).join('');
+            if (d.allServices && d.allServices.length > 0) {
+                const ownServices = d.services || [];
+                const inheritedServices = (d.allServices || []).filter(s => !ownServices.includes(s));
+                
+                let html = '';
+                if (ownServices.length > 0) {
+                    html += ownServices.map(s => 
+                        `<span class="tooltip-service">${serviceIcons[s] || ''} ${s}</span>`
+                    ).join('');
+                }
+                if (inheritedServices.length > 0) {
+                    html += `<div style="width:100%;font-size:0.6rem;opacity:0.7;margin-top:4px;">via children:</div>`;
+                    html += inheritedServices.map(s => 
+                        `<span class="tooltip-service" style="opacity:0.7">${serviceIcons[s] || ''} ${s}</span>`
+                    ).join('');
+                }
+                servicesDiv.innerHTML = html;
                 servicesDiv.style.display = 'flex';
+                servicesDiv.style.flexWrap = 'wrap';
             } else {
                 servicesDiv.style.display = 'none';
             }
@@ -1257,11 +1423,25 @@
         }
 
         function getAllEntities(node, parent = null, list = []) {
+            // Collect all services from children
+            function collectAllServices(n) {
+                let allServices = new Set(n.services || []);
+                if (n.children) {
+                    n.children.forEach(child => {
+                        collectAllServices(child).forEach(s => allServices.add(s));
+                    });
+                }
+                return allServices;
+            }
+
+            const allServices = Array.from(collectAllServices(node));
+            
             list.push({ 
                 name: node.name.replace(/\n/g, ' '), 
                 parent: parent, 
                 category: node.category,
-                services: node.services || []
+                services: node.services || [],
+                allServices: allServices
             });
             if (node.children) {
                 node.children.forEach(child => getAllEntities(child, node.name.replace(/\n/g, ' '), list));
@@ -1418,6 +1598,87 @@
             document.getElementById('form-header').textContent = '➕ Add Entity';
         }
 
+        // Modal functions
+        let modalEntity = null;
+
+        function openModal(d) {
+            modalEntity = d.name;
+            
+            // Find full entity data
+            const entityNode = findNode(ecosystemData, d.name);
+            
+            document.getElementById('modal-name').value = d.name.replace(/\n/g, ' ');
+            document.getElementById('modal-category').value = d.category;
+            document.getElementById('modal-desc').value = entityNode?.description || d.description || '';
+            
+            // Set services
+            document.querySelectorAll('#modal-services input').forEach(cb => {
+                const isChecked = d.services && d.services.includes(cb.value);
+                cb.checked = isChecked;
+                cb.parentElement.classList.toggle('checked', isChecked);
+            });
+
+            document.getElementById('modal-overlay').classList.add('visible');
+        }
+
+        function closeModal() {
+            modalEntity = null;
+            document.getElementById('modal-overlay').classList.remove('visible');
+        }
+
+        function saveModal() {
+            if (!modalEntity) return;
+
+            const newName = document.getElementById('modal-name').value.trim();
+            const newCategory = document.getElementById('modal-category').value;
+            const newDescription = document.getElementById('modal-desc').value.trim();
+            
+            const newServices = [];
+            document.querySelectorAll('#modal-services input:checked').forEach(cb => {
+                newServices.push(cb.value);
+            });
+
+            if (!newName) {
+                alert('Please enter a name');
+                return;
+            }
+
+            // Find and update entity in tree
+            function updateInTree(tree) {
+                if (tree.name === modalEntity || tree.name.replace(/\n/g, ' ') === modalEntity.replace(/\n/g, ' ')) {
+                    tree.name = newName;
+                    tree.category = newCategory;
+                    tree.description = newDescription;
+                    tree.services = newServices;
+                    return true;
+                }
+                if (tree.children) {
+                    for (let child of tree.children) {
+                        if (updateInTree(child)) return true;
+                    }
+                }
+                return false;
+            }
+
+            const oldName = modalEntity.replace(/\n/g, ' ');
+            updateInTree(ecosystemData);
+
+            // Update connections
+            connections = connections.map(c => ({
+                ...c,
+                from: c.from === oldName ? newName : c.from,
+                to: c.to === oldName ? newName : c.to
+            }));
+
+            closeModal();
+            initVisualization();
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
         function removeEntity(name) {
             function removeFromTree(tree, targetName) {
                 if (tree.children) {
@@ -1501,7 +1762,7 @@
                     <div style="flex:1">
                         <div class="entity-name">${entity.name}</div>
                         <div class="entity-parent">${entity.parent ? `↳ ${entity.parent}` : 'Root'}</div>
-                        ${entity.services.length > 0 ? `<div class="entity-services">${entity.services.map(s => `<span class="service-tag">${serviceIcons[s] || ''}</span>`).join('')}</div>` : ''}
+                        ${entity.allServices.length > 0 ? `<div class="entity-services">${entity.allServices.map(s => `<span class="service-tag">${serviceIcons[s] || ''}</span>`).join('')}</div>` : ''}
                     </div>
                     <button class="btn btn-small" style="background:#2196F3;color:white;margin-right:3px;" onclick="editEntity('${entity.name.replace(/'/g, "\\'")}')">✎</button>
                     <button class="btn btn-danger btn-small" onclick="removeEntity('${entity.name.replace(/'/g, "\\'")}')">×</button>
@@ -1581,6 +1842,13 @@
 
         // Checkbox styling
         document.querySelectorAll('.service-checkbox input').forEach(cb => {
+            cb.addEventListener('change', function() {
+                this.parentElement.classList.toggle('checked', this.checked);
+            });
+        });
+
+        // Modal checkbox styling
+        document.querySelectorAll('#modal-services .service-checkbox input').forEach(cb => {
             cb.addEventListener('change', function() {
                 this.parentElement.classList.toggle('checked', this.checked);
             });
