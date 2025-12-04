@@ -1195,17 +1195,25 @@
                 return allServices;
             }
 
-            function traverse(node, parent = null, depth = 0, parentColor = null) {
+            function traverse(node, parent = null, depth = 0, branchColor = null) {
                 const nodeId = id++;
                 const ownServices = node.services || [];
                 const allServices = Array.from(collectAllServices(node));
                 
-                // Determine color: root and level 1 use own category, deeper nodes inherit parent color
+                // Determine color:
+                // - Root (depth 0): uses root color
+                // - Level 1 (main categories): uses own category color - this becomes the branch color
+                // - Level 2+: inherits the branch color from level 1 ancestor
                 let displayColor;
-                if (depth <= 1) {
+                let newBranchColor = branchColor;
+                
+                if (depth === 0) {
+                    displayColor = categoryColors.root;
+                } else if (depth === 1) {
                     displayColor = categoryColors[node.category] || categoryColors.community;
+                    newBranchColor = displayColor; // Set branch color for all descendants
                 } else {
-                    displayColor = parentColor || categoryColors[node.category] || categoryColors.community;
+                    displayColor = branchColor || categoryColors[node.category] || categoryColors.community;
                 }
                 
                 nodes.push({
@@ -1225,7 +1233,7 @@
                 }
 
                 if (node.children) {
-                    node.children.forEach(child => traverse(child, nodeId, depth + 1, displayColor));
+                    node.children.forEach(child => traverse(child, nodeId, depth + 1, newBranchColor));
                 }
             }
 
@@ -1275,8 +1283,8 @@
                 .append('path')
                 .attr('class', 'link')
                 .attr('stroke', d => {
-                    const sourceNode = nodes.find(n => n.id === (typeof d.source === 'object' ? d.source.id : d.source));
-                    return d3.color(getNodeColor(sourceNode)).brighter(0.5);
+                    const targetNode = nodes.find(n => n.id === (typeof d.target === 'object' ? d.target.id : d.target));
+                    return targetNode ? targetNode.displayColor : '#999';
                 })
                 .attr('stroke-width', d => {
                     const sourceNode = nodes.find(n => n.id === (typeof d.source === 'object' ? d.source.id : d.source));
