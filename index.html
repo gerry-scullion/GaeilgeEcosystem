@@ -70,7 +70,6 @@
             border-radius: 10px;
             font-size: 1rem;
             margin-bottom: 16px;
-            transition: border-color 0.2s;
         }
 
         .password-input:focus {
@@ -88,7 +87,6 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
         }
 
         .password-btn:hover {
@@ -114,16 +112,16 @@
 
         /* Sidebar */
         .sidebar {
-            width: 340px;
+            width: 380px;
             background: white;
-            padding: 24px;
+            padding: 16px;
             overflow-y: auto;
             box-shadow: 4px 0 20px rgba(0, 0, 0, 0.08);
             z-index: 10;
         }
 
         .sidebar h1 {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: #1a5f3c;
             margin-bottom: 4px;
             display: flex;
@@ -137,45 +135,76 @@
 
         .subtitle {
             color: #888;
-            font-size: 0.8rem;
-            margin-bottom: 20px;
-            padding-bottom: 16px;
+            font-size: 0.7rem;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
             border-bottom: 1px solid #eee;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 12px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 8px 4px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .tab.active {
+            background: #1a5f3c;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         /* Form */
         .form-section {
             background: #f8f9fa;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 16px;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 12px;
         }
 
         .form-section h3 {
             color: #1a5f3c;
-            font-size: 0.9rem;
-            margin-bottom: 12px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
         }
 
         .form-group {
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .form-group label {
             display: block;
             font-weight: 500;
             color: #555;
-            margin-bottom: 4px;
-            font-size: 0.8rem;
+            margin-bottom: 3px;
+            font-size: 0.7rem;
         }
 
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 10px 12px;
+            padding: 8px 10px;
             border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 0.9rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
         }
 
         .form-group input:focus,
@@ -184,14 +213,47 @@
             border-color: #1a5f3c;
         }
 
+        /* Service checkboxes */
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .service-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: 4px;
+            background: white;
+            border: 1px solid #ddd;
+        }
+
+        .service-checkbox:hover {
+            background: #f0f7f4;
+        }
+
+        .service-checkbox input {
+            width: auto;
+            margin: 0;
+        }
+
+        .service-checkbox.checked {
+            background: #e8f5e9;
+            border-color: #1a5f3c;
+        }
+
         .btn {
-            padding: 10px 16px;
+            padding: 9px 14px;
             border: none;
-            border-radius: 8px;
-            font-size: 0.85rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
         }
 
         .btn-primary {
@@ -205,8 +267,8 @@
         }
 
         .btn-small {
-            padding: 6px 10px;
-            font-size: 0.75rem;
+            padding: 4px 7px;
+            font-size: 0.65rem;
         }
 
         .btn-danger {
@@ -216,44 +278,89 @@
 
         /* Entity List */
         .entity-list {
-            margin-top: 16px;
+            margin-top: 10px;
         }
 
         .entity-list h3 {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #1a5f3c;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .search-box input {
             width: 100%;
-            padding: 10px 12px;
+            padding: 8px 10px;
             border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            margin-bottom: 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
         }
 
-        .entity-item {
+        .entity-item, .connection-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 8px 10px;
+            align-items: flex-start;
+            padding: 8px;
             background: white;
             border-radius: 6px;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             border-left: 3px solid #1a5f3c;
-            font-size: 0.8rem;
-        }
-
-        .entity-name {
-            font-weight: 500;
-            color: #333;
-        }
-
-        .entity-parent {
             font-size: 0.7rem;
+        }
+
+        .connection-item {
+            border-left-color: #FF9800;
+        }
+
+        .entity-name, .connection-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.75rem;
+        }
+
+        .entity-parent, .connection-detail {
+            font-size: 0.6rem;
             color: #999;
+        }
+
+        .entity-services {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            margin-top: 3px;
+        }
+
+        .service-tag {
+            font-size: 0.6rem;
+            padding: 1px 4px;
+            border-radius: 3px;
+            background: #f0f0f0;
+        }
+
+        /* Filter bar */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .filter-btn {
+            padding: 4px 8px;
+            font-size: 0.65rem;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background: #1a5f3c;
+            color: white;
+            border-color: #1a5f3c;
         }
 
         /* Visualization */
@@ -268,7 +375,6 @@
             height: 100%;
         }
 
-        /* Node Styles */
         .node-circle {
             cursor: pointer;
             transition: all 0.2s;
@@ -278,9 +384,18 @@
             filter: brightness(1.1);
         }
 
+        .node-circle.dimmed {
+            opacity: 0.2;
+        }
+
         .node-label {
             font-size: 11px;
             fill: #333;
+            pointer-events: none;
+        }
+
+        .node-services {
+            font-size: 8px;
             pointer-events: none;
         }
 
@@ -289,10 +404,24 @@
             stroke-opacity: 0.6;
         }
 
-        .cluster-circle {
+        .link.dimmed {
+            stroke-opacity: 0.1;
+        }
+
+        .connection-link {
             fill: none;
-            stroke-dasharray: 5, 5;
-            stroke-opacity: 0.3;
+            stroke-dasharray: 6, 4;
+            stroke-opacity: 0.8;
+            cursor: pointer;
+        }
+
+        .connection-link:hover {
+            stroke-opacity: 1;
+            stroke-width: 4px !important;
+        }
+
+        .connection-link.dimmed {
+            stroke-opacity: 0.1;
         }
 
         /* Tooltip */
@@ -302,11 +431,11 @@
             color: white;
             padding: 10px 14px;
             border-radius: 8px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.2s;
-            max-width: 220px;
+            max-width: 280px;
             z-index: 100;
         }
 
@@ -321,7 +450,24 @@
 
         .tooltip-desc {
             opacity: 0.9;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
+            margin-bottom: 4px;
+        }
+
+        .tooltip-services {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            margin-top: 6px;
+            padding-top: 6px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .tooltip-service {
+            font-size: 0.65rem;
+            padding: 2px 5px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
         }
 
         /* Controls */
@@ -334,19 +480,18 @@
         }
 
         .control-btn {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background: white;
             border: 2px solid #1a5f3c;
             color: #1a5f3c;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: all 0.2s;
         }
 
         .control-btn:hover {
@@ -357,46 +502,67 @@
         /* Legend */
         .legend {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             background: white;
-            padding: 14px;
+            padding: 12px;
             border-radius: 10px;
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-            font-size: 0.75rem;
+            font-size: 0.65rem;
+            max-width: 180px;
         }
 
         .legend h4 {
             color: #1a5f3c;
+            margin-bottom: 6px;
+            font-size: 0.7rem;
+        }
+
+        .legend-section {
             margin-bottom: 8px;
-            font-size: 0.8rem;
+        }
+
+        .legend-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+            font-size: 0.65rem;
         }
 
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 4px;
+            gap: 5px;
+            margin-bottom: 2px;
             color: #555;
         }
 
         .legend-dot {
-            width: 12px;
-            height: 12px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
+        }
+
+        .legend-line {
+            width: 16px;
+            height: 2px;
+        }
+
+        .legend-line.dashed {
+            background: repeating-linear-gradient(90deg, currentColor, currentColor 3px, transparent 3px, transparent 5px);
         }
 
         /* Import/Export */
         .import-export {
             display: flex;
-            gap: 6px;
-            margin-top: 12px;
+            gap: 4px;
+            margin-top: 10px;
         }
 
         .import-export .btn {
             flex: 1;
-            padding: 8px;
-            font-size: 0.75rem;
+            padding: 7px;
+            font-size: 0.65rem;
             background: #6c757d;
             color: white;
         }
@@ -424,42 +590,112 @@
             <h1>Ecosystem Map</h1>
             <p class="subtitle">Irish Language Learning Services</p>
 
-            <div class="form-section">
-                <h3>➕ Add Entity</h3>
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" id="entity-name" placeholder="Entity name...">
-                </div>
-                <div class="form-group">
-                    <label>Parent</label>
-                    <select id="parent-select">
-                        <option value="">-- Root Level --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Category</label>
-                    <select id="category-select">
-                        <option value="government">Government</option>
-                        <option value="education">Education</option>
-                        <option value="community">Community</option>
-                        <option value="media">Media</option>
-                        <option value="courses">Courses</option>
-                        <option value="resources">Resources</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <input type="text" id="entity-desc" placeholder="Brief description...">
-                </div>
-                <button class="btn btn-primary" onclick="addEntity()">Add Entity</button>
+            <!-- Filter by Service -->
+            <div class="filter-bar">
+                <span style="font-size:0.65rem;color:#666;margin-right:4px;">Filter:</span>
+                <button class="filter-btn active" onclick="filterByService('all')">All</button>
+                <button class="filter-btn" onclick="filterByService('grants')">💰</button>
+                <button class="filter-btn" onclick="filterByService('community')">👥</button>
+                <button class="filter-btn" onclick="filterByService('events')">🎉</button>
+                <button class="filter-btn" onclick="filterByService('resources')">📚</button>
+                <button class="filter-btn" onclick="filterByService('training')">🎓</button>
+                <button class="filter-btn" onclick="filterByService('advocacy')">📢</button>
+                <button class="filter-btn" onclick="filterByService('research')">🔬</button>
             </div>
 
-            <div class="entity-list">
-                <h3>📋 Entities</h3>
-                <div class="search-box">
-                    <input type="text" id="search-input" placeholder="Search..." oninput="filterEntities()">
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('entities')">Entities</button>
+                <button class="tab" onclick="switchTab('connections')">Connections</button>
+            </div>
+
+            <!-- Entities Tab -->
+            <div class="tab-content active" id="tab-entities">
+                <div class="form-section">
+                    <h3>➕ Add Entity</h3>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="entity-name" placeholder="Entity name...">
+                    </div>
+                    <div class="form-group">
+                        <label>Parent</label>
+                        <select id="parent-select">
+                            <option value="">-- Root Level --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="category-select">
+                            <option value="government">Government</option>
+                            <option value="education">Education</option>
+                            <option value="community">Community</option>
+                            <option value="media">Media</option>
+                            <option value="courses">Courses</option>
+                            <option value="resources">Resources</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" id="entity-desc" placeholder="Brief description...">
+                    </div>
+                    <div class="form-group">
+                        <label>Services Offered</label>
+                        <div class="services-grid" id="services-checkboxes">
+                            <label class="service-checkbox"><input type="checkbox" value="grants"> 💰 Grants</label>
+                            <label class="service-checkbox"><input type="checkbox" value="community"> 👥 Community</label>
+                            <label class="service-checkbox"><input type="checkbox" value="events"> 🎉 Events</label>
+                            <label class="service-checkbox"><input type="checkbox" value="resources"> 📚 Resources</label>
+                            <label class="service-checkbox"><input type="checkbox" value="training"> 🎓 Training</label>
+                            <label class="service-checkbox"><input type="checkbox" value="advocacy"> 📢 Advocacy</label>
+                            <label class="service-checkbox"><input type="checkbox" value="research"> 🔬 Research</label>
+                            <label class="service-checkbox"><input type="checkbox" value="employment"> 💼 Employment</label>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="addEntity()">Add Entity</button>
                 </div>
-                <div id="entity-list-container"></div>
+
+                <div class="entity-list">
+                    <h3>📋 Entities</h3>
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Search..." oninput="filterEntities()">
+                    </div>
+                    <div id="entity-list-container"></div>
+                </div>
+            </div>
+
+            <!-- Connections Tab -->
+            <div class="tab-content" id="tab-connections">
+                <div class="form-section">
+                    <h3>🔗 Add Connection</h3>
+                    <div class="form-group">
+                        <label>From Entity</label>
+                        <select id="conn-from"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>To Entity</label>
+                        <select id="conn-to"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Connection Type</label>
+                        <select id="conn-type">
+                            <option value="funding">💰 Funding / Grants</option>
+                            <option value="data">📊 Data Exchange</option>
+                            <option value="partnership">🤝 Partnership</option>
+                            <option value="resources">📚 Resources</option>
+                            <option value="people">👥 People / Students</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input type="text" id="conn-desc" placeholder="e.g., Annual grant of €50k">
+                    </div>
+                    <button class="btn btn-primary" onclick="addConnection()">Add Connection</button>
+                </div>
+
+                <div class="entity-list">
+                    <h3>🔗 Connections</h3>
+                    <div id="connection-list-container"></div>
+                </div>
             </div>
 
             <div class="import-export">
@@ -475,16 +711,38 @@
             <div class="tooltip" id="tooltip">
                 <div class="tooltip-title"></div>
                 <div class="tooltip-desc"></div>
+                <div class="tooltip-services"></div>
             </div>
 
             <div class="legend">
-                <h4>Categories</h4>
-                <div class="legend-item"><span class="legend-dot" style="background:#2980b9"></span> Government</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#8BC34A"></span> Education</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#78909C"></span> Community</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#9C27B0"></span> Media</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#FF9800"></span> Courses</div>
-                <div class="legend-item"><span class="legend-dot" style="background:#00BCD4"></span> Resources</div>
+                <div class="legend-section">
+                    <div class="legend-title">Entity Types</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#2980b9"></span> Government</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#8BC34A"></span> Education</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#78909C"></span> Community</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#9C27B0"></span> Media</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#FF9800"></span> Courses</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#00BCD4"></span> Resources</div>
+                </div>
+                <div class="legend-section">
+                    <div class="legend-title">Connections</div>
+                    <div class="legend-item"><span class="legend-line dashed" style="color:#4CAF50"></span> Funding</div>
+                    <div class="legend-item"><span class="legend-line dashed" style="color:#2196F3"></span> Data</div>
+                    <div class="legend-item"><span class="legend-line dashed" style="color:#9C27B0"></span> Partnership</div>
+                    <div class="legend-item"><span class="legend-line dashed" style="color:#FF9800"></span> Resources</div>
+                    <div class="legend-item"><span class="legend-line dashed" style="color:#E91E63"></span> People</div>
+                </div>
+                <div class="legend-section">
+                    <div class="legend-title">Services</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:2px;">
+                        <span style="font-size:0.6rem">💰 Grants</span>
+                        <span style="font-size:0.6rem">👥 Community</span>
+                        <span style="font-size:0.6rem">🎉 Events</span>
+                        <span style="font-size:0.6rem">📚 Resources</span>
+                        <span style="font-size:0.6rem">🎓 Training</span>
+                        <span style="font-size:0.6rem">📢 Advocacy</span>
+                    </div>
+                </div>
             </div>
 
             <div class="controls">
@@ -496,7 +754,6 @@
     </div>
 
     <script>
-        // Password - change this to your desired password
         const SITE_PASSWORD = "gaeilge2024";
 
         function checkPassword() {
@@ -511,7 +768,6 @@
             }
         }
 
-        // Category colors matching the style
         const categoryColors = {
             root: "#1a5f3c",
             government: "#2980b9",
@@ -522,153 +778,232 @@
             resources: "#00BCD4"
         };
 
-        // Ecosystem data
+        const connectionColors = {
+            funding: "#4CAF50",
+            data: "#2196F3",
+            partnership: "#9C27B0",
+            resources: "#FF9800",
+            people: "#E91E63"
+        };
+
+        const connectionIcons = {
+            funding: "💰",
+            data: "📊",
+            partnership: "🤝",
+            resources: "📚",
+            people: "👥"
+        };
+
+        const serviceIcons = {
+            grants: "💰",
+            community: "👥",
+            events: "🎉",
+            resources: "📚",
+            training: "🎓",
+            advocacy: "📢",
+            research: "🔬",
+            employment: "💼"
+        };
+
+        let currentFilter = 'all';
+
+        // Data with services
         let ecosystemData = {
-            name: "Irish Language\nEcosystem",
-            category: "root",
-            description: "Services supporting Irish language learning",
-            children: [
+            "name": "Irish Language\nEcosystem",
+            "category": "root",
+            "description": "Services supporting Irish language learning",
+            "services": [],
+            "children": [
                 {
-                    name: "Government\nBodies",
-                    category: "government",
-                    description: "State and cross-border agencies",
-                    children: [
+                    "name": "Government\nBodies",
+                    "category": "government",
+                    "description": "State and cross-border agencies",
+                    "services": ["grants", "advocacy"],
+                    "children": [
                         {
-                            name: "Foras na\nGaeilge",
-                            category: "government",
-                            description: "All-island promotion body",
-                            children: [
-                                { name: "Conradh na\nGaeilge", category: "community", description: "Democratic forum" },
-                                { name: "Gael Linn", category: "community", description: "Language & heritage" },
-                                { name: "Glór na nGael", category: "community", description: "Family & community" },
-                                { name: "Oireachtas na\nGaeilge", category: "community", description: "Arts & literature" },
-                                { name: "Cumann na\nbhFiann", category: "community", description: "Youth opportunities" }
+                            "name": "Foras na\nGaeilge",
+                            "category": "government",
+                            "description": "All-island promotion body",
+                            "services": ["grants", "resources", "advocacy", "research"],
+                            "children": [
+                                { "name": "Conradh na\nGaeilge", "category": "community", "description": "Democratic forum", "services": ["community", "events", "advocacy"] },
+                                { "name": "Gael Linn", "category": "community", "description": "Language & heritage", "services": ["training", "events", "resources"] },
+                                { "name": "Glór na nGael", "category": "community", "description": "Family & community", "services": ["community", "grants", "events"] },
+                                { "name": "Oireachtas na\nGaeilge", "category": "community", "description": "Arts & literature", "services": ["events", "resources"] },
+                                { "name": "Cumann na\nbhFiann", "category": "community", "description": "Youth opportunities", "services": ["training", "community", "events"] }
                             ]
                         },
+                        { "name": "Údarás na\nGaeltachta", "category": "government", "description": "Gaeltacht development", "services": ["grants", "employment", "community"] },
+                        { "name": "COGG", "category": "government", "description": "Education council", "services": ["resources", "research", "advocacy"] },
                         {
-                            name: "Údarás na\nGaeltachta",
-                            category: "government",
-                            description: "Gaeltacht development"
-                        },
-                        {
-                            name: "COGG",
-                            category: "government",
-                            description: "Education council"
+                            "name": "G365",
+                            "category": "government",
+                            "description": "G365 Initiatives",
+                            "services": ["community", "events"],
+                            "children": [
+                                { "name": "DCC", "category": "government", "description": "Dublin City Council", "services": ["grants", "community"] },
+                                { "name": "DLR", "category": "government", "description": "Dún Laoghaire-Rathdown", "services": ["grants", "community"] },
+                                { "name": "Fingal", "category": "government", "description": "Fingal County Council", "services": ["grants", "community"] },
+                                { "name": "SDCC", "category": "government", "description": "South Dublin County Council", "services": ["grants", "community"] }
+                            ]
                         }
                     ]
                 },
                 {
-                    name: "Education\nSector",
-                    category: "education",
-                    description: "Schools and educational bodies",
-                    children: [
+                    "name": "Education\nSector",
+                    "category": "education",
+                    "description": "Schools and educational bodies",
+                    "services": ["training", "resources"],
+                    "children": [
                         {
-                            name: "Gaelscoileanna",
-                            category: "education",
-                            description: "188 primary schools",
-                            children: [
-                                { name: "An Foras\nPátrúnachta", category: "education", description: "Patron body" }
+                            "name": "Gaelscoileanna",
+                            "category": "education",
+                            "description": "188 primary schools",
+                            "services": ["training", "community"],
+                            "children": [
+                                { "name": "An Foras\nPátrúnachta", "category": "education", "description": "Patron body", "services": ["advocacy", "resources"] }
                             ]
                         },
+                        { "name": "Gaelcholáistí", "category": "education", "description": "32 secondary schools", "services": ["training"] },
+                        { "name": "Gaeloideachas", "category": "education", "description": "Support body", "services": ["advocacy", "resources", "research"] },
+                        { "name": "Comhairle na\nGaelscolaíochta", "category": "education", "description": "NI education", "services": ["advocacy", "resources"] },
+                        { "name": "Forbairt\nNaíonraí", "category": "education", "description": "Preschool development", "services": ["training", "resources"] }
+                    ]
+                },
+                {
+                    "name": "Summer\nColleges",
+                    "category": "courses",
+                    "description": "Coláistí Samhraidh",
+                    "services": ["training", "community"],
+                    "children": [
                         {
-                            name: "Gaelcholáistí",
-                            category: "education",
-                            description: "32 secondary schools"
+                            "name": "CONCOS",
+                            "category": "courses",
+                            "description": "47 college federation",
+                            "services": ["advocacy", "resources"],
+                            "children": [
+                                { "name": "Coláiste\nChiaráin", "category": "courses", "description": "An Cheathrú Rua", "services": ["training", "community"] },
+                                { "name": "Coláiste\nChamuis", "category": "courses", "description": "Connemara", "services": ["training", "community"] },
+                                { "name": "Coláiste na\nRinne", "category": "courses", "description": "Waterford", "services": ["training", "community"] },
+                                { "name": "Coláiste na\nbhFiann", "category": "courses", "description": "Ráth Chairn", "services": ["training", "community"] }
+                            ]
                         },
+                        { "name": "Oideas Gael", "category": "courses", "description": "Adult courses", "services": ["training", "community", "events"] },
+                        { "name": "Spleodar", "category": "courses", "description": "Connemara courses", "services": ["training", "community"] },
+                        { "name": "Forsa.ie\n(Gaeltacht)", "category": "government", "description": "Gaeltacht services", "services": ["resources"] }
+                    ]
+                },
+                {
+                    "name": "Adult\nLearning",
+                    "category": "courses",
+                    "description": "Courses for adults",
+                    "services": ["training"],
+                    "children": [
                         {
-                            name: "Gaeloideachas",
-                            category: "education",
-                            description: "Support body"
+                            "name": "Gaelchultúr",
+                            "category": "courses",
+                            "description": "Main adult provider",
+                            "services": ["training", "resources"],
+                            "children": [
+                                { "name": "Ranganna.com", "category": "resources", "description": "E-learning", "services": ["training", "resources"] }
+                            ]
                         },
+                        { "name": "Bitesize Irish", "category": "courses", "description": "Online courses", "services": ["training", "resources"] },
+                        { "name": "TEG", "category": "courses", "description": "European certificate", "services": ["training", "research"] },
                         {
-                            name: "Comhairle na\nGaelscolaíochta",
-                            category: "education",
-                            description: "NI education"
-                        },
-                        {
-                            name: "Forbairt\nNaíonraí",
-                            category: "education",
-                            description: "Preschool development"
+                            "name": "Instagram",
+                            "category": "resources",
+                            "description": "Social media learning",
+                            "services": ["resources", "community"],
+                            "children": [
+                                { "name": "Irish with\nMollie", "category": "media", "description": "Instagram creator", "services": ["training", "community"] }
+                            ]
                         }
                     ]
                 },
                 {
-                    name: "Summer\nColleges",
-                    category: "courses",
-                    description: "Coláistí Samhraidh",
-                    children: [
-                        {
-                            name: "CONCOS",
-                            category: "courses",
-                            description: "47 college federation",
-                            children: [
-                                { name: "Coláiste\nChiaráin", category: "courses", description: "An Cheathrú Rua" },
-                                { name: "Coláiste\nChamuis", category: "courses", description: "Connemara" },
-                                { name: "Coláiste na\nRinne", category: "courses", description: "Waterford" },
-                                { name: "Coláiste na\nbhFiann", category: "courses", description: "Ráth Chairn" }
-                            ]
-                        },
-                        { name: "Oideas Gael", category: "courses", description: "Adult courses" },
-                        { name: "Spleodar", category: "courses", description: "Connemara courses" }
+                    "name": "Media &\nBroadcasting",
+                    "category": "media",
+                    "description": "Irish language media",
+                    "services": ["resources", "community"],
+                    "children": [
+                        { "name": "TG4", "category": "media", "description": "TV channel", "services": ["resources", "employment", "events"] },
+                        { "name": "RTÉ Raidió na\nGaeltachta", "category": "media", "description": "National radio", "services": ["resources", "employment"] },
+                        { "name": "Raidió na Life", "category": "media", "description": "Dublin radio", "services": ["resources", "community"] },
+                        { "name": "Raidió Rí-Rá", "category": "media", "description": "Youth radio", "services": ["resources", "community"] },
+                        { "name": "MOLSCÉAL", "category": "media", "description": "TG4 app", "services": ["resources"] }
                     ]
                 },
                 {
-                    name: "Adult\nLearning",
-                    category: "courses",
-                    description: "Courses for adults",
-                    children: [
-                        {
-                            name: "Gaelchultúr",
-                            category: "courses",
-                            description: "Main adult provider",
-                            children: [
-                                { name: "Ranganna.com", category: "resources", description: "E-learning" }
-                            ]
-                        },
-                        { name: "Bitesize Irish", category: "courses", description: "Online courses" },
-                        { name: "TEG", category: "courses", description: "European certificate" }
+                    "name": "Resources\n& Tools",
+                    "category": "resources",
+                    "description": "Learning resources",
+                    "services": ["resources"],
+                    "children": [
+                        { "name": "Teanglann.ie", "category": "resources", "description": "Dictionaries", "services": ["resources"] },
+                        { "name": "Foclóir.ie", "category": "resources", "description": "Technical dictionary", "services": ["resources"] },
+                        { "name": "Focal.ie", "category": "resources", "description": "Terminology", "services": ["resources"] },
+                        { "name": "Abair.ie", "category": "resources", "description": "Text-to-speech", "services": ["resources", "research"] },
+                        { "name": "PEIG.ie", "category": "resources", "description": "Info hub", "services": ["resources", "community"] },
+                        { "name": "An Gúm", "category": "resources", "description": "Publisher", "services": ["resources"] }
                     ]
                 },
                 {
-                    name: "Media &\nBroadcasting",
-                    category: "media",
-                    description: "Irish language media",
-                    children: [
-                        { name: "TG4", category: "media", description: "TV channel" },
-                        { name: "RTÉ Raidió na\nGaeltachta", category: "media", description: "National radio" },
-                        { name: "Raidió na Life", category: "media", description: "Dublin radio" },
-                        { name: "Raidió Rí-Rá", category: "media", description: "Youth radio" },
-                        { name: "MOLSCÉAL", category: "media", description: "TG4 app" }
-                    ]
-                },
-                {
-                    name: "Resources\n& Tools",
-                    category: "resources",
-                    description: "Learning resources",
-                    children: [
-                        { name: "Teanglann.ie", category: "resources", description: "Dictionaries" },
-                        { name: "Foclóir.ie", category: "resources", description: "Technical dictionary" },
-                        { name: "Focal.ie", category: "resources", description: "Terminology" },
-                        { name: "Abair.ie", category: "resources", description: "Text-to-speech" },
-                        { name: "PEIG.ie", category: "resources", description: "Info hub" },
-                        { name: "An Gúm", category: "resources", description: "Publisher" }
-                    ]
-                },
-                {
-                    name: "Community\n& Events",
-                    category: "community",
-                    description: "Organizations & events",
-                    children: [
-                        { name: "Seachtain na\nGaeilge", category: "community", description: "Annual festival" },
-                        { name: "Pop-up\nGaeltacht", category: "community", description: "Speaking events" },
-                        { name: "Ciorcail\nComhrá", category: "community", description: "Conversation circles" }
+                    "name": "Community\n& Events",
+                    "category": "community",
+                    "description": "Organizations & events",
+                    "services": ["community", "events"],
+                    "children": [
+                        { "name": "Seachtain na\nGaeilge", "category": "community", "description": "Annual festival", "services": ["events", "community"] },
+                        { "name": "Pop-up\nGaeltacht", "category": "community", "description": "Speaking events", "services": ["events", "community"] },
+                        { "name": "Ciorcail\nComhrá", "category": "community", "description": "Conversation circles", "services": ["community", "training"] }
                     ]
                 }
             ]
         };
 
+        let connections = [
+            { from: "Foras na Gaeilge", to: "Conradh na Gaeilge", type: "funding", description: "Core funding" },
+            { from: "Foras na Gaeilge", to: "Gael Linn", type: "funding", description: "Core funding" },
+            { from: "Foras na Gaeilge", to: "Glór na nGael", type: "funding", description: "Core funding" },
+            { from: "Foras na Gaeilge", to: "Gaelscoileanna", type: "funding", description: "Support funding" },
+            { from: "Foras na Gaeilge", to: "TG4", type: "partnership", description: "Language promotion" },
+            { from: "COGG", to: "Gaeloideachas", type: "resources", description: "Educational materials" },
+            { from: "Gaelscoileanna", to: "CONCOS", type: "people", description: "Student pipeline" }
+        ];
+
         let svg, g, simulation, zoom;
         let nodes = [], links = [];
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector(`.tab:nth-child(${tab === 'entities' ? 1 : 2})`).classList.add('active');
+            document.getElementById(`tab-${tab}`).classList.add('active');
+        }
+
+        function filterByService(service) {
+            currentFilter = service;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            updateVisualization();
+        }
+
+        function updateVisualization() {
+            if (currentFilter === 'all') {
+                g.selectAll('.node').classed('dimmed', false);
+                g.selectAll('.node-circle').classed('dimmed', false);
+                g.selectAll('.link').classed('dimmed', false);
+                g.selectAll('.connection-link').classed('dimmed', false);
+            } else {
+                g.selectAll('.node').each(function(d) {
+                    const hasService = d.services && d.services.includes(currentFilter);
+                    d3.select(this).select('.node-circle').classed('dimmed', !hasService);
+                });
+                g.selectAll('.link').classed('dimmed', true);
+                g.selectAll('.connection-link').classed('dimmed', true);
+            }
+        }
 
         function initVisualization() {
             const container = document.getElementById('mindmap-container');
@@ -682,37 +1017,30 @@
                 .attr('width', width)
                 .attr('height', height);
 
-            // Zoom behavior
             zoom = d3.zoom()
                 .scaleExtent([0.2, 4])
                 .on('zoom', (event) => g.attr('transform', event.transform));
 
             svg.call(zoom);
-
             g = svg.append('g');
 
-            // Process data into nodes and links
             processData();
 
-            // Create force simulation
             simulation = d3.forceSimulation(nodes)
-                .force('link', d3.forceLink(links).id(d => d.id).distance(d => {
-                    // Vary distance by depth
-                    return 80 + (d.source.depth || 0) * 20;
-                }).strength(0.8))
-                .force('charge', d3.forceManyBody().strength(d => {
-                    return d.depth === 0 ? -800 : d.depth === 1 ? -400 : -150;
-                }))
+                .force('link', d3.forceLink(links).id(d => d.id).distance(d => 80 + (d.source.depth || 0) * 20).strength(0.8))
+                .force('charge', d3.forceManyBody().strength(d => d.depth === 0 ? -800 : d.depth === 1 ? -400 : -150))
                 .force('center', d3.forceCenter(width / 2, height / 2))
                 .force('collision', d3.forceCollide().radius(d => getNodeRadius(d) + 20))
                 .on('tick', ticked);
 
-            // Draw elements
+            drawConnections();
             drawLinks();
             drawNodes();
 
             updateParentSelect();
+            updateConnectionSelects();
             updateEntityList();
+            updateConnectionList();
         }
 
         function processData() {
@@ -722,18 +1050,18 @@
 
             function traverse(node, parent = null, depth = 0) {
                 const nodeId = id++;
-                const newNode = {
+                nodes.push({
                     id: nodeId,
                     name: node.name,
                     category: node.category,
                     description: node.description,
+                    services: node.services || [],
                     depth: depth,
                     children: node.children ? node.children.length : 0
-                };
-                nodes.push(newNode);
+                });
 
                 if (parent !== null) {
-                    links.push({ source: parent, target: nodeId });
+                    links.push({ source: parent, target: nodeId, type: 'hierarchy' });
                 }
 
                 if (node.children) {
@@ -755,9 +1083,32 @@
             return categoryColors[d.category] || categoryColors.community;
         }
 
+        function findNodeByName(name) {
+            const cleanName = name.replace(/\n/g, ' ').trim();
+            return nodes.find(n => n.name.replace(/\n/g, ' ').trim() === cleanName);
+        }
+
+        function drawConnections() {
+            g.selectAll('.connection-link').remove();
+            connections.forEach(conn => {
+                const sourceNode = findNodeByName(conn.from);
+                const targetNode = findNodeByName(conn.to);
+                if (sourceNode && targetNode) {
+                    g.append('path')
+                        .attr('class', 'connection-link')
+                        .attr('data-from', conn.from)
+                        .attr('data-to', conn.to)
+                        .attr('data-type', conn.type)
+                        .attr('stroke', connectionColors[conn.type])
+                        .attr('stroke-width', 2.5)
+                        .on('mouseover', (event) => showConnectionTooltip(event, conn))
+                        .on('mouseout', hideTooltip);
+                }
+            });
+        }
+
         function drawLinks() {
             g.selectAll('.link').remove();
-            
             g.selectAll('.link')
                 .data(links)
                 .enter()
@@ -786,7 +1137,6 @@
                     .on('drag', dragged)
                     .on('end', dragEnded));
 
-            // Add circles
             nodeGroups.append('circle')
                 .attr('class', 'node-circle')
                 .attr('r', d => getNodeRadius(d))
@@ -796,11 +1146,10 @@
                 .on('mouseover', showTooltip)
                 .on('mouseout', hideTooltip);
 
-            // Add labels
             nodeGroups.each(function(d) {
                 const group = d3.select(this);
                 const lines = d.name.split('\n');
-                const fontSize = d.depth === 0 ? 12 : d.depth === 1 ? 10 : 9;
+                const fontSize = d.depth === 0 ? 11 : d.depth === 1 ? 9 : 8;
                 const lineHeight = fontSize + 2;
                 const startY = -(lines.length - 1) * lineHeight / 2;
 
@@ -808,12 +1157,22 @@
                     group.append('text')
                         .attr('class', 'node-label')
                         .attr('text-anchor', 'middle')
-                        .attr('dy', startY + i * lineHeight + 4)
+                        .attr('dy', startY + i * lineHeight + 3)
                         .style('font-size', fontSize + 'px')
                         .style('font-weight', d.depth < 2 ? '600' : '400')
                         .style('fill', d.depth === 0 ? 'white' : '#333')
                         .text(line);
                 });
+
+                // Add service icons below node
+                if (d.services && d.services.length > 0 && d.depth > 0) {
+                    const serviceStr = d.services.slice(0, 4).map(s => serviceIcons[s] || '').join('');
+                    group.append('text')
+                        .attr('class', 'node-services')
+                        .attr('text-anchor', 'middle')
+                        .attr('dy', getNodeRadius(d) + 10)
+                        .text(serviceStr);
+                }
             });
         }
 
@@ -822,8 +1181,22 @@
                 .attr('d', d => {
                     const dx = d.target.x - d.source.x;
                     const dy = d.target.y - d.source.y;
-                    const dr = Math.sqrt(dx * dx + dy * dy) * 0.8;
                     return `M${d.source.x},${d.source.y}Q${(d.source.x + d.target.x) / 2 + dy * 0.1},${(d.source.y + d.target.y) / 2 - dx * 0.1},${d.target.x},${d.target.y}`;
+                });
+
+            g.selectAll('.connection-link')
+                .attr('d', function() {
+                    const fromName = d3.select(this).attr('data-from');
+                    const toName = d3.select(this).attr('data-to');
+                    const sourceNode = findNodeByName(fromName);
+                    const targetNode = findNodeByName(toName);
+                    if (sourceNode && targetNode) {
+                        const dx = targetNode.x - sourceNode.x;
+                        const dy = targetNode.y - sourceNode.y;
+                        const dr = Math.sqrt(dx * dx + dy * dy);
+                        return `M${sourceNode.x},${sourceNode.y}A${dr},${dr} 0 0,1 ${targetNode.x},${targetNode.y}`;
+                    }
+                    return '';
                 });
 
             g.selectAll('.node')
@@ -851,6 +1224,27 @@
             const tooltip = document.getElementById('tooltip');
             tooltip.querySelector('.tooltip-title').textContent = d.name.replace(/\n/g, ' ');
             tooltip.querySelector('.tooltip-desc').textContent = d.description || '';
+            
+            const servicesDiv = tooltip.querySelector('.tooltip-services');
+            if (d.services && d.services.length > 0) {
+                servicesDiv.innerHTML = d.services.map(s => 
+                    `<span class="tooltip-service">${serviceIcons[s] || ''} ${s}</span>`
+                ).join('');
+                servicesDiv.style.display = 'flex';
+            } else {
+                servicesDiv.style.display = 'none';
+            }
+            
+            tooltip.style.left = (event.pageX + 15) + 'px';
+            tooltip.style.top = (event.pageY - 10) + 'px';
+            tooltip.classList.add('visible');
+        }
+
+        function showConnectionTooltip(event, conn) {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.querySelector('.tooltip-title').textContent = `${connectionIcons[conn.type]} ${conn.from} → ${conn.to}`;
+            tooltip.querySelector('.tooltip-desc').textContent = conn.description || conn.type;
+            tooltip.querySelector('.tooltip-services').style.display = 'none';
             tooltip.style.left = (event.pageX + 15) + 'px';
             tooltip.style.top = (event.pageY - 10) + 'px';
             tooltip.classList.add('visible');
@@ -860,9 +1254,13 @@
             document.getElementById('tooltip').classList.remove('visible');
         }
 
-        // Entity management
         function getAllEntities(node, parent = null, list = []) {
-            list.push({ name: node.name.replace(/\n/g, ' '), parent: parent, category: node.category });
+            list.push({ 
+                name: node.name.replace(/\n/g, ' '), 
+                parent: parent, 
+                category: node.category,
+                services: node.services || []
+            });
             if (node.children) {
                 node.children.forEach(child => getAllEntities(child, node.name.replace(/\n/g, ' '), list));
             }
@@ -886,13 +1284,18 @@
             const parentName = document.getElementById('parent-select').value;
             const category = document.getElementById('category-select').value;
             const description = document.getElementById('entity-desc').value.trim();
+            
+            const services = [];
+            document.querySelectorAll('#services-checkboxes input:checked').forEach(cb => {
+                services.push(cb.value);
+            });
 
             if (!name) {
                 alert('Please enter a name');
                 return;
             }
 
-            const newEntity = { name, category, description };
+            const newEntity = { name, category, description, services };
 
             if (parentName) {
                 const parent = findNode(ecosystemData, parentName);
@@ -904,8 +1307,10 @@
                 ecosystemData.children.push(newEntity);
             }
 
+            // Clear form
             document.getElementById('entity-name').value = '';
             document.getElementById('entity-desc').value = '';
+            document.querySelectorAll('#services-checkboxes input').forEach(cb => cb.checked = false);
 
             initVisualization();
         }
@@ -923,6 +1328,40 @@
 
             if (confirm(`Remove "${name}"?`)) {
                 removeFromTree(ecosystemData, name);
+                connections = connections.filter(c => c.from !== name && c.to !== name);
+                initVisualization();
+            }
+        }
+
+        function addConnection() {
+            const from = document.getElementById('conn-from').value;
+            const to = document.getElementById('conn-to').value;
+            const type = document.getElementById('conn-type').value;
+            const description = document.getElementById('conn-desc').value.trim();
+
+            if (!from || !to) {
+                alert('Please select both entities');
+                return;
+            }
+            if (from === to) {
+                alert('Cannot connect an entity to itself');
+                return;
+            }
+
+            const exists = connections.some(c => c.from === from && c.to === to && c.type === type);
+            if (exists) {
+                alert('This connection already exists');
+                return;
+            }
+
+            connections.push({ from, to, type, description });
+            document.getElementById('conn-desc').value = '';
+            initVisualization();
+        }
+
+        function removeConnection(index) {
+            if (confirm('Remove this connection?')) {
+                connections.splice(index, 1);
                 initVisualization();
             }
         }
@@ -939,50 +1378,66 @@
             });
         }
 
+        function updateConnectionSelects() {
+            const fromSelect = document.getElementById('conn-from');
+            const toSelect = document.getElementById('conn-to');
+            const entities = getAllEntities(ecosystemData);
+            const options = entities.map(e => `<option value="${e.name}">${e.name}</option>`).join('');
+            fromSelect.innerHTML = '<option value="">-- Select --</option>' + options;
+            toSelect.innerHTML = '<option value="">-- Select --</option>' + options;
+        }
+
         function updateEntityList() {
             const container = document.getElementById('entity-list-container');
             const entities = getAllEntities(ecosystemData);
             const searchTerm = document.getElementById('search-input').value.toLowerCase();
-
             const filtered = entities.filter(e => e.name.toLowerCase().includes(searchTerm));
 
-            container.innerHTML = filtered.slice(0, 20).map(entity => `
+            container.innerHTML = filtered.slice(0, 12).map(entity => `
                 <div class="entity-item">
-                    <div>
+                    <div style="flex:1">
                         <div class="entity-name">${entity.name}</div>
                         <div class="entity-parent">${entity.parent ? `↳ ${entity.parent}` : 'Root'}</div>
+                        ${entity.services.length > 0 ? `<div class="entity-services">${entity.services.map(s => `<span class="service-tag">${serviceIcons[s] || ''}</span>`).join('')}</div>` : ''}
                     </div>
                     <button class="btn btn-danger btn-small" onclick="removeEntity('${entity.name.replace(/'/g, "\\'")}')">×</button>
                 </div>
             `).join('');
 
-            if (filtered.length > 20) {
-                container.innerHTML += `<p style="color:#999;font-size:0.75rem;padding:8px;">+ ${filtered.length - 20} more...</p>`;
+            if (filtered.length > 12) {
+                container.innerHTML += `<p style="color:#999;font-size:0.65rem;padding:6px;">+ ${filtered.length - 12} more...</p>`;
             }
+        }
+
+        function updateConnectionList() {
+            const container = document.getElementById('connection-list-container');
+            if (connections.length === 0) {
+                container.innerHTML = '<p style="color:#999;font-size:0.7rem;padding:8px;">No connections yet</p>';
+                return;
+            }
+
+            container.innerHTML = connections.map((conn, index) => `
+                <div class="connection-item">
+                    <div>
+                        <div class="connection-name">${connectionIcons[conn.type]} ${conn.from} → ${conn.to}</div>
+                        <div class="connection-detail">${conn.description || conn.type}</div>
+                    </div>
+                    <button class="btn btn-danger btn-small" onclick="removeConnection(${index})">×</button>
+                </div>
+            `).join('');
         }
 
         function filterEntities() {
             updateEntityList();
         }
 
-        // Zoom controls
-        function zoomIn() {
-            svg.transition().call(zoom.scaleBy, 1.3);
-        }
+        function zoomIn() { svg.transition().call(zoom.scaleBy, 1.3); }
+        function zoomOut() { svg.transition().call(zoom.scaleBy, 0.7); }
+        function resetView() { svg.transition().call(zoom.transform, d3.zoomIdentity); }
 
-        function zoomOut() {
-            svg.transition().call(zoom.scaleBy, 0.7);
-        }
-
-        function resetView() {
-            const width = svg.attr('width');
-            const height = svg.attr('height');
-            svg.transition().call(zoom.transform, d3.zoomIdentity);
-        }
-
-        // Import/Export
         function exportData() {
-            const dataStr = JSON.stringify(ecosystemData, null, 2);
+            const exportObj = { entities: ecosystemData, connections: connections };
+            const dataStr = JSON.stringify(exportObj, null, 2);
             const blob = new Blob([dataStr], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
@@ -997,7 +1452,14 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     try {
-                        ecosystemData = JSON.parse(e.target.result);
+                        const data = JSON.parse(e.target.result);
+                        if (data.entities) {
+                            ecosystemData = data.entities;
+                            connections = data.connections || [];
+                        } else {
+                            ecosystemData = data;
+                            connections = [];
+                        }
                         initVisualization();
                     } catch (error) {
                         alert('Invalid JSON file');
@@ -1007,11 +1469,17 @@
             }
         }
 
-        // Resize handler
         window.addEventListener('resize', () => {
             if (document.getElementById('app').classList.contains('visible')) {
                 initVisualization();
             }
+        });
+
+        // Checkbox styling
+        document.querySelectorAll('.service-checkbox input').forEach(cb => {
+            cb.addEventListener('change', function() {
+                this.parentElement.classList.toggle('checked', this.checked);
+            });
         });
     </script>
 </body>
