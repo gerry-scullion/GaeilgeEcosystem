@@ -1195,10 +1195,18 @@
                 return allServices;
             }
 
-            function traverse(node, parent = null, depth = 0) {
+            function traverse(node, parent = null, depth = 0, parentColor = null) {
                 const nodeId = id++;
                 const ownServices = node.services || [];
                 const allServices = Array.from(collectAllServices(node));
+                
+                // Determine color: root and level 1 use own category, deeper nodes inherit parent color
+                let displayColor;
+                if (depth <= 1) {
+                    displayColor = categoryColors[node.category] || categoryColors.community;
+                } else {
+                    displayColor = parentColor || categoryColors[node.category] || categoryColors.community;
+                }
                 
                 nodes.push({
                     id: nodeId,
@@ -1208,7 +1216,8 @@
                     services: ownServices,
                     allServices: allServices,
                     depth: depth,
-                    children: node.children ? node.children.length : 0
+                    children: node.children ? node.children.length : 0,
+                    displayColor: displayColor
                 });
 
                 if (parent !== null) {
@@ -1216,7 +1225,7 @@
                 }
 
                 if (node.children) {
-                    node.children.forEach(child => traverse(child, nodeId, depth + 1));
+                    node.children.forEach(child => traverse(child, nodeId, depth + 1, displayColor));
                 }
             }
 
@@ -1231,7 +1240,7 @@
         }
 
         function getNodeColor(d) {
-            return categoryColors[d.category] || categoryColors.community;
+            return d.displayColor || categoryColors[d.category] || categoryColors.community;
         }
 
         function findNodeByName(name) {
